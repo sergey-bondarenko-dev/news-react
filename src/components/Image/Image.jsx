@@ -9,7 +9,7 @@ const Image = (props) => {
 
     return (
         <div className={clsx(styles.wrapper, className)}>
-            {src ? <img src={src} alt='' className={styles.image} /> : null}
+            {src && src !== 'None' ? <img src={src} alt='' className={styles.image} /> : null}
         </div>
     );
 }
