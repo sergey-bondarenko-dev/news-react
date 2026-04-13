@@ -1,0 +1,15 @@
+.root {
+    display: flex;
+    flex-direction: column;
+    gap: .75rem;
+}
+
+.title {
+    font-size: 1.25em;
+}
+
+.extra {
+    font-size: 1rem;
+    color: #6c7072;
+}
+

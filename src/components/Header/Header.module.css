@@ -1,0 +1,17 @@
+.header {
+  border-bottom: 1px solid #f2f4f5;
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.title {
+  font-size: 28px;
+}
+
+.date {
+  font-size: 1rem;
+}
