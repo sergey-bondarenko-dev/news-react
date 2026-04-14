@@ -4,27 +4,48 @@ import styles from './MainPage.module.css';
 import { newsApi } from '../../api/newsApi';
 import NewList from '../../components/NewList/NewList';
 import Skeleton from '../../components/Skeleton';
+import Pagination from '../../components/Pagination/Pagination';
 
 const MainPage = () => {
+    const TOTAL_PAGES = 10;
+    const PAGE_SIZE = 10;
+
     const [news, setNews] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [currentPage, setCurrentPage] = useState(1);
+
+    const loadNews = async (currentPage) => {
+        try {
+            setIsLoading(true);
+
+            const response = await newsApi.getAll(currentPage, PAGE_SIZE);
+            if (response.news) {
+                setNews(response.news);
+            }
+        } finally {
+            setIsLoading(false);
+        }
+    }
 
     useEffect(() => {
-        const loadNews = async () => {
-            try {
-                setIsLoading(true);
+        loadNews(currentPage);
+    }, [currentPage]);
 
-                const response = await newsApi.getAll();
-                if (response.news) {
-                    setNews(response.news);
-                }
-            } finally {
-                setIsLoading(false);
-            }
+    const handleNextPageClick = () => {
+        if (currentPage < TOTAL_PAGES) {
+            setCurrentPage(currentPage + 1);
         }
+    }
 
-        loadNews();
-    }, [])
+    const handlePrevPageClick = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    }
+
+    const handlePageClick = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    }
 
     return (
         <main className={styles.root}>
@@ -38,7 +59,21 @@ const MainPage = () => {
             {(news.length > 0 && !isLoading ) && (
                 <>
                     <NewsBanner item={news[0]} />
+                    <Pagination 
+                        totalPages={TOTAL_PAGES}
+                        handleNextPageClick={handleNextPageClick}
+                        handlePrevPageClick={handlePrevPageClick}
+                        handlePageClick={handlePageClick}
+                        currentPage={currentPage}
+                    />
                     <NewList items={news} />
+                    <Pagination 
+                        totalPages={TOTAL_PAGES}
+                        handleNextPageClick={handleNextPageClick}
+                        handlePrevPageClick={handlePrevPageClick}
+                        handlePageClick={handlePageClick}
+                        currentPage={currentPage}
+                    />
                 </>
             )}
         </main>
