@@ -8,7 +8,6 @@ const NewListItem = (props) => {
         ...rest
     } = props;
 
-    console.log(item);
     return (
         <li className={styles.item} {...rest}>
             <Image src={item.image} className={styles.image} />
