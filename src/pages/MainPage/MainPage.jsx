@@ -5,6 +5,7 @@ import { newsApi } from '../../api/newsApi';
 import NewList from '../../components/NewList/NewList';
 import Skeleton from '../../components/Skeleton';
 import Pagination from '../../components/Pagination/Pagination';
+import Categories from '../../components/Categories/Categories';
 
 const MainPage = () => {
     const TOTAL_PAGES = 10;
@@ -13,12 +14,20 @@ const MainPage = () => {
     const [news, setNews] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
+    const [categories, setCategories] = useState([]);
+    const [selectedCategory, setSelectedCategory] = useState('All');
 
-    const loadNews = async (currentPage) => {
+    const loadNews = async (currentPage, selectedCategory) => {
         try {
             setIsLoading(true);
 
-            const response = await newsApi.getAll(currentPage, PAGE_SIZE);
+            const params = {
+                page_number: currentPage,
+                page_size: PAGE_SIZE,
+                category: selectedCategory === 'All' ? null : selectedCategory,
+            }
+
+            const response = await newsApi.getAll(params);
             if (response.news) {
                 setNews(response.news);
             }
@@ -27,9 +36,20 @@ const MainPage = () => {
         }
     }
 
+    const loadCategories = async () => {
+        const response = await newsApi.getCategories();
+        if (response.categories) {
+            setCategories(['All', ...response.categories]);
+        }
+    }
+
     useEffect(() => {
-        loadNews(currentPage);
-    }, [currentPage]);
+        loadCategories();
+    }, []);
+
+    useEffect(() => {
+        loadNews(currentPage, selectedCategory);
+    }, [currentPage, selectedCategory]);
 
     const handleNextPageClick = () => {
         if (currentPage < TOTAL_PAGES) {
@@ -49,6 +69,12 @@ const MainPage = () => {
 
     return (
         <main className={styles.root}>
+            <Categories 
+                categories={categories}
+                selectedCategory={selectedCategory}
+                setSelectedCategory={setSelectedCategory}
+            />
+
             {isLoading && (
                 <>
                     <Skeleton type="banner" />
