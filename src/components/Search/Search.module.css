@@ -1,0 +1,12 @@
+.search {
+    display: flex;
+    background-color: white;
+    gap: .75rem;
+}
+
+.input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #f2f3f5;
+    border-radius: .75rem;
+}
