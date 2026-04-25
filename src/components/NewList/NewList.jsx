@@ -1,3 +1,4 @@
+import { withSkeleton } from '../../helpers/hoc';
 import NewListItem from '../NewListItem/NewListItem';
 import styles from './NewList.module.css';
 
@@ -15,4 +16,6 @@ const NewList = (props) => {
     );
 }
 
-export default NewList;
+const NewListWithSkeleton = withSkeleton(NewList, 'item', 10);
+
+export default NewListWithSkeleton;
