@@ -4,6 +4,12 @@
     gap: .75rem;
 }
 
+.list.row {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: .75rem;
+}
+
 .banner {
     padding-top: 100%;
     position: relative;
