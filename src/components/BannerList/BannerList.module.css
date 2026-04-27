@@ -2,10 +2,15 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: .75rem;
-    max-height: 1200px;
-    overflow-y: auto;
 }
 
 .listItem {
 
+}
+
+@media (min-width: 768px) {
+    .list {
+        max-height: 1200px;
+        overflow-y: auto;
+    }
 }

@@ -1,7 +1,8 @@
 import clsx from 'clsx';
 import styles from './Categories.module.css';
+import { forwardRef } from 'react';
 
-const Categories = (props) => {
+const Categories = forwardRef((props, ref) => {
     const {
         categories,
         selectedCategory,
@@ -9,7 +10,7 @@ const Categories = (props) => {
     } = props;
 
     return (
-        <div className={styles.root}>
+        <div className={styles.root} ref={ref}>
             <button 
                 key='all' 
                 className={clsx(styles.button, selectedCategory === null && styles.isActive)}
@@ -28,6 +29,6 @@ const Categories = (props) => {
             ))}
         </div>
     );
-}
+});
 
 export default Categories;
