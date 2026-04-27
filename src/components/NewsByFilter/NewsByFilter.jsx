@@ -3,14 +3,17 @@ import NewsFilters from '../NewsFilters/NewsFilters';
 import NewList from '../NewList/NewList';
 import Pagination from '../Pagination/Pagination';
 import styles from './NewsByFilter.module.css';
+import { useFilters } from '../../hooks/useFilters';
+import { useDebounce } from '../../hooks/useDebounce';
+import { useMemo } from 'react';
+import { useFetch } from '../../hooks/useFetch';
+import { newsApi } from '../../api/newsApi';
+import PaginationWrapper from '../PaginationWrapper/PaginationWrapper';
 
-const NewsByFilter = (props) => {
-    const {
-        filters,
-        changeFilter,
-        news,
-        isLoading,
-    } = props;
+const NewsByFilter = () => {
+    const { filters, changeFilter } = useFilters();
+    const debouncedKeywords = useDebounce(filters.keywords, 1000);
+
 
     const currentPage = filters.pageNumber;
 
@@ -30,6 +33,24 @@ const NewsByFilter = (props) => {
         changeFilter('pageNumber', pageNumber);
     }
 
+    const newsParams = useMemo(() => {
+        return {
+            pageNumber: filters.pageNumber,
+            pageSize: filters.pageSize,
+            category: filters.category,
+            keywords: debouncedKeywords,
+        };
+    }, [
+        filters.pageNumber,
+        filters.pageSize,
+        filters.category,
+        debouncedKeywords,
+    ]);
+
+    const { data: dataNews, isLoading } = useFetch(newsApi.getAll, newsParams);
+    const news = dataNews?.news;
+    
+
     return (
         <section className={styles.section}>
             <NewsFilters 
@@ -37,27 +58,17 @@ const NewsByFilter = (props) => {
                 changeFilter={changeFilter}
             />
 
-            {(news?.length > 0) && (
-                <Pagination dataNews
-                    totalPages={TOTAL_PAGES}
-                    handleNextPageClick={handleNextPageClick}
-                    handlePrevPageClick={handlePrevPageClick}
-                    handlePageClick={handlePageClick}
-                    currentPage={currentPage}
-                />
-            )}
-
-            <NewList isLoading={isLoading} items={news?.length > 0 ? news : []} />
-
-            {(news?.length > 0) && (
-                <Pagination 
-                    totalPages={TOTAL_PAGES}
-                    handleNextPageClick={handleNextPageClick}
-                    handlePrevPageClick={handlePrevPageClick}
-                    handlePageClick={handlePageClick}
-                    currentPage={currentPage}
-                />
-            )}
+            <PaginationWrapper
+                totalPages={TOTAL_PAGES}
+                handleNextPageClick={handleNextPageClick}
+                handlePrevPageClick={handlePrevPageClick}
+                handlePageClick={handlePageClick}
+                currentPage={currentPage}
+                top={true}
+                bottom={true}
+            >
+                <NewList isLoading={isLoading} items={news?.length > 0 ? news : []} />
+            </PaginationWrapper>
         </section>
     );
 }
