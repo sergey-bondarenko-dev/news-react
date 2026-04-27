@@ -2,9 +2,8 @@
     display: flex;
     align-items: flex-start;
     gap: .5rem;
-    overflow-x: auto;
+    overflow-x: hidden;
     white-space: nowrap;
-    padding-bottom: 0.5rem;
 }
 
 .button {

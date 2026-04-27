@@ -2,6 +2,7 @@ import { newsApi } from '../../api/newsApi';
 import { useFetch } from '../../hooks/useFetch';
 import Categories from '../Categories/Categories';
 import Search from '../Search/Search';
+import Slider from '../Slider';
 import styles from './NewsFilters.module.css';
 
 const NewsFilters = (props) => {
@@ -16,11 +17,13 @@ const NewsFilters = (props) => {
     return (
         <div className={styles.filters}>
             {categories && (
-                <Categories 
-                    categories={categories}
-                    selectedCategory={filters.category}
-                    setSelectedCategory={(category) => changeFilter('category', category)}
-                />
+                <Slider>
+                    <Categories 
+                        categories={categories}
+                        selectedCategory={filters.category}
+                        setSelectedCategory={(category) => changeFilter('category', category)}
+                    />
+                </Slider>
             )}
 
             <Search
