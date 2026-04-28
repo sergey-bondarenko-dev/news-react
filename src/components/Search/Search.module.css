@@ -4,9 +4,22 @@
     gap: .75rem;
 }
 
+[data-theme=dark] .search {
+    background-color: var(--color-dark);
+}
+
 .input {
     width: 100%;
     padding: 10px;
     border: 1px solid #f2f3f5;
     border-radius: .75rem;
+}
+
+[data-theme=dark] .input {
+    border-color: #616161;
+    background-color: var(--color-dark);
+}
+
+[data-theme=dark] .input::placeholder {
+    color: #f2f3f5;
 }
