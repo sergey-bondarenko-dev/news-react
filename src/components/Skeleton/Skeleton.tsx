@@ -1,7 +1,14 @@
 import clsx from 'clsx';
 import styles from './Skeleton.module.css';
+import { DirectionType, SkeletonType } from '@/interfaces';
 
-const Skeleton = (props) => {
+interface Props {
+    count: number,
+    type: SkeletonType,
+    direction: DirectionType,
+}
+
+const Skeleton = (props: Props) => {
     const {
         count = 1,
         type = 'banner',

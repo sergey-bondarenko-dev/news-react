@@ -1,6 +1,11 @@
 import styles from './Search.module.css';
 
-const Search = (props) => {
+interface Props {
+    keywords: string,
+    setKeywords: (keywords: string) => void,
+}
+
+const Search = (props: Props) => {
     const {
         keywords,
         setKeywords,

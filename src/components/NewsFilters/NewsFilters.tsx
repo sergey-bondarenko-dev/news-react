@@ -1,3 +1,4 @@
+import { CategoriesApiResponse, IFilters } from '@/interfaces';
 import { newsApi } from '../../api/newsApi';
 import { useFetch } from '../../hooks/useFetch';
 import Categories from '../Categories/Categories';
@@ -5,13 +6,18 @@ import Search from '../Search/Search';
 import Slider from '../Slider';
 import styles from './NewsFilters.module.css';
 
-const NewsFilters = (props) => {
+interface Props {
+    filters: IFilters;
+    changeFilter: (key: string, value: string|number|null) => void;
+}
+
+const NewsFilters = (props: Props) => {
     const {
         filters,
         changeFilter,
     } = props;
 
-    const { data: dataCategories } = useFetch(newsApi.getCategories);
+    const { data: dataCategories } = useFetch<CategoriesApiResponse, null>(newsApi.getCategories);
     const categories = dataCategories?.categories;
 
     return (

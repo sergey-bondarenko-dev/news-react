@@ -1,8 +1,13 @@
+import { INews } from '@/interfaces';
 import { withSkeleton } from '../../helpers/hoc';
 import NewListItem from '../NewListItem/NewListItem';
 import styles from './NewList.module.css';
 
-const NewList = (props) => {
+interface Props {
+    items: INews[],
+}
+
+const NewList = (props: Props) => {
     const {
         items,
     } = props;
@@ -16,6 +21,6 @@ const NewList = (props) => {
     );
 }
 
-const NewListWithSkeleton = withSkeleton(NewList, 'item', 10);
+const NewListWithSkeleton = withSkeleton<Props>(NewList, 'item', 10);
 
 export default NewListWithSkeleton;

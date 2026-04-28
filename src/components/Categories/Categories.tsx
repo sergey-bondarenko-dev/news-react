@@ -1,8 +1,15 @@
 import clsx from 'clsx';
 import styles from './Categories.module.css';
-import { forwardRef } from 'react';
+import { ForwardedRef, forwardRef } from 'react';
+import { CategoryType } from '@/interfaces';
 
-const Categories = forwardRef((props, ref) => {
+interface Props {
+    categories: CategoryType[],
+    selectedCategory: CategoryType | null;
+    setSelectedCategory: (category: CategoryType | null) => void;
+}
+
+const Categories = forwardRef((props: Props, ref: ForwardedRef<HTMLDivElement>) => {
     const {
         categories,
         selectedCategory,

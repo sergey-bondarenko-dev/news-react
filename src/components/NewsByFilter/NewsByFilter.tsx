@@ -1,7 +1,6 @@
 import { TOTAL_PAGES } from '../../constants';
 import NewsFilters from '../NewsFilters/NewsFilters';
 import NewList from '../NewList/NewList';
-import Pagination from '../Pagination/Pagination';
 import styles from './NewsByFilter.module.css';
 import { useFilters } from '../../hooks/useFilters';
 import { useDebounce } from '../../hooks/useDebounce';
@@ -9,6 +8,7 @@ import { useMemo } from 'react';
 import { useFetch } from '../../hooks/useFetch';
 import { newsApi } from '../../api/newsApi';
 import PaginationWrapper from '../PaginationWrapper/PaginationWrapper';
+import { NewsApiResponse, ParamsType } from '@/interfaces';
 
 const NewsByFilter = () => {
     const { filters, changeFilter } = useFilters();
@@ -29,7 +29,7 @@ const NewsByFilter = () => {
         }
     }
 
-    const handlePageClick = (pageNumber) => {
+    const handlePageClick = (pageNumber: number) => {
         changeFilter('pageNumber', pageNumber);
     }
 
@@ -47,7 +47,7 @@ const NewsByFilter = () => {
         debouncedKeywords,
     ]);
 
-    const { data: dataNews, isLoading } = useFetch(newsApi.getAll, newsParams);
+    const { data: dataNews, isLoading } = useFetch<NewsApiResponse, ParamsType>(newsApi.getAll, newsParams);
     const news = dataNews?.news;
     
 
@@ -67,7 +67,7 @@ const NewsByFilter = () => {
                 top={true}
                 bottom={true}
             >
-                <NewList isLoading={isLoading} items={news?.length > 0 ? news : []} />
+                <NewList isLoading={isLoading} items={news && news.length && news.length > 0 ? news : []} />
             </PaginationWrapper>
         </section>
     );
