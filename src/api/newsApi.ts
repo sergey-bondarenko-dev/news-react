@@ -1,12 +1,20 @@
+import { CategoriesApiResponse, NewsApiResponse, ParamsType } from "@/interfaces";
 import axios from "axios";
 
 const BASE_URL = import.meta.env.VITE_NEWS_BASE_API_URL;
 const API_KEY = import.meta.env.VITE_NEWS_API_KEY;
 
 export const newsApi = {
-    getAll: async ({ pageNumber = 1, pageSize = 10, category, keywords }) => {
+    getAll: async (params?: ParamsType): Promise<NewsApiResponse> => {
+        const {
+            pageNumber = 1,
+            pageSize = 10,
+            category,
+            keywords,
+        } = params || {};
+
         try {
-            const response = await axios.get(`${BASE_URL}/search`, {
+            const response = await axios.get<NewsApiResponse>(`${BASE_URL}/search`, {
                 params: {
                     apiKey: API_KEY,
                     page_number: pageNumber,
@@ -19,11 +27,12 @@ export const newsApi = {
             return response.data;
         } catch (error) {
             console.log(error);
+            return { news: [], page: 1, status: "error" };
         }
     },
-    getLatestNews: async () => {
+    getLatestNews: async (): Promise<NewsApiResponse> => {
         try {
-            const response = await axios.get(`${BASE_URL}/latest-news`, {
+            const response = await axios.get<NewsApiResponse>(`${BASE_URL}/latest-news`, {
                 params: {
                     apiKey: API_KEY,
                 }
@@ -32,11 +41,12 @@ export const newsApi = {
             return response.data;
         } catch (error) {
             console.log(error);
+            return { news: [], page: 1, status: "error" };
         }
     },
-    getCategories: async () => {
+    getCategories: async (): Promise<CategoriesApiResponse> => {
         try {
-            const response = await axios.get(`${BASE_URL}/available/categories`, {
+            const response = await axios.get<CategoriesApiResponse>(`${BASE_URL}/available/categories`, {
                 params: {
                     apiKey: API_KEY,
                 }
@@ -45,6 +55,7 @@ export const newsApi = {
             return response.data;
         } catch (error) {
             console.log(error);
+            return { categories: [], description: '', status: 'error' };
         }
     }
 }

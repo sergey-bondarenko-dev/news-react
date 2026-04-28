@@ -1,10 +1,15 @@
+import { INews } from '@/interfaces';
 import { formatTimeAgo } from '../../helpers/formatTimeAgo';
 import Image from '../Image';
 import styles from './NewsBanner.module.css';
 
-const NewsBanner = (props) => {
+interface Props {
+    item: INews;
+}
+
+const NewsBanner = (props: Props) => {
   const {
-    item = {},
+    item,
   } = props;
   
   return (

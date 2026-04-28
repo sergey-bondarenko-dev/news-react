@@ -1,8 +1,13 @@
+import { INews } from '@/interfaces';
 import { formatTimeAgo } from '../../helpers/formatTimeAgo';
 import Image from '../Image';
 import styles from './NewListItem.module.css';
 
-const NewListItem = (props) => {
+interface Props {
+    item: INews,
+}
+
+const NewListItem = (props: Props) => {
     const {
         item,
         ...rest

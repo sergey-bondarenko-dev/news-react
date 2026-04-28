@@ -1,6 +1,14 @@
+import React from 'react';
 import Pagination from '../Pagination';
+import { IPaginationProps } from '@/interfaces';
 
-const PaginationWrapper = (props) => {
+interface Props {
+    top?: boolean,
+    bottom?: boolean,
+    children: React.ReactNode,
+}
+
+const PaginationWrapper = (props: Props & IPaginationProps) => {
     const {
         top,
         bottom,

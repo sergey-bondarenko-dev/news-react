@@ -1,8 +1,13 @@
 import NewsBanner from '../NewsBanner';
 import { withSkeleton } from '../../helpers/hoc';
 import styles from './BannerList.module.css';
+import { INews } from '@/interfaces';
 
-const BannerList = (props) => {
+interface Props {
+    banners?: INews[];
+}
+
+const BannerList = (props: Props) => {
     const {
         banners,
     } = props;
@@ -18,7 +23,7 @@ const BannerList = (props) => {
     );
 }
 
-const BannerListWithSkeleton = withSkeleton(
+const BannerListWithSkeleton = withSkeleton<Props>(
     BannerList, 
     'banner', 
     6,
