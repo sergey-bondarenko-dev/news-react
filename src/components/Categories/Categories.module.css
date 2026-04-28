@@ -15,6 +15,11 @@
     background-color: #f2f4f5;
 }
 
+[data-theme=dark] .button {
+    background-color: var(--color-dark);
+    color: #fff;
+}
+
 .button.isActive {
     background-color: #e7e7ff;
     color: #684eff;

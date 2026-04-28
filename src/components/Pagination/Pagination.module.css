@@ -16,6 +16,11 @@
     display: inline-flex;
 }
 
+[data-theme=dark] .arrow,
+[data-theme=dark] .pageNumber {
+    color: #f2f3f5;
+}
+
 .pageNumber {
     border: none;
     background-color: transparent;
