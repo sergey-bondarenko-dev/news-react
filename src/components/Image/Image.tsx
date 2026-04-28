@@ -1,7 +1,12 @@
 import clsx from 'clsx';
 import styles from './Image.module.css';
 
-const Image = (props) => {
+interface Props {
+    src: string,
+    className?: string,
+}
+
+const Image = (props: Props) => {
     const {
         src,
         className,

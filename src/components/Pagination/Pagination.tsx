@@ -1,7 +1,8 @@
 import clsx from 'clsx';
 import styles from './Pagination.module.css';
+import { IPaginationProps } from '@/interfaces';
 
-const Pagination = (props) => {
+const Pagination = (props: IPaginationProps) => {
     const {
         totalPages,
         handleNextPageClick,

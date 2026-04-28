@@ -9,7 +9,7 @@ export const useFilters = () => {
         keywords: '',
     });
     
-    const changeFilter = (key, value) => {
+    const changeFilter = (key: string, value: string | number | null) => {
         setFilters((prev) => {
             return {...prev, [key]: value};
         });
