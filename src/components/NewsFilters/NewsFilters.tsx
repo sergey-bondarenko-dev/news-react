@@ -1,24 +1,16 @@
-import { CategoriesApiResponse, IFilters } from '@/interfaces';
-import { newsApi } from '../../api/newsApi';
-import { useFetch } from '../../hooks/useFetch';
 import Categories from '../Categories/Categories';
 import Search from '../Search/Search';
 import Slider from '../Slider';
 import styles from './NewsFilters.module.css';
+import { useGetCategoriesQuery } from '@/store/services/newsApi';
+import { useAppDispatch, useAppSelector } from '@/store';
+import { setFilters } from '@/store/slices/newsSlice';
 
-interface Props {
-    filters: IFilters;
-    changeFilter: (key: string, value: string|number|null) => void;
-}
-
-const NewsFilters = (props: Props) => {
-    const {
-        filters,
-        changeFilter,
-    } = props;
-
-    const { data: dataCategories } = useFetch<CategoriesApiResponse, null>(newsApi.getCategories);
-    const categories = dataCategories?.categories;
+const NewsFilters = () => {
+    const filters = useAppSelector((state) => state.news.filters);
+    const dispatch = useAppDispatch();
+    const { data } = useGetCategoriesQuery(null);
+    const categories = data?.categories;
 
     return (
         <div className={styles.filters}>
@@ -27,14 +19,22 @@ const NewsFilters = (props: Props) => {
                     <Categories 
                         categories={categories}
                         selectedCategory={filters.category}
-                        setSelectedCategory={(category) => changeFilter('category', category)}
+                        setSelectedCategory={
+                            (category) => dispatch(setFilters({
+                                key: 'category',
+                                value: category,
+                            }))
+                        }
                     />
                 </Slider>
             )}
 
             <Search
                 keywords={filters.keywords} 
-                setKeywords={(keywords) => changeFilter('keywords', keywords)} 
+                setKeywords={(keywords) => dispatch(setFilters({
+                    key: 'keywords',
+                    value: keywords,
+                }))} 
             />
         </div>
     );
