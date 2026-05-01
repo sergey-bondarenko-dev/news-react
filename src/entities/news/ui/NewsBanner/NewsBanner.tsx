@@ -2,6 +2,8 @@ import { INews } from '@/shared/interfaces';
 import { formatTimeAgo } from '@/shared/date';
 import { Image } from '@/shared/ui';
 import styles from './NewsBanner.module.css';
+import { Link } from 'react-router-dom';
+import { routes } from '@/shared/config';
 
 interface Props {
     item: INews;
@@ -15,7 +17,7 @@ const NewsBanner = (props: Props) => {
   return (
       <div className={styles.root}>
         <Image src={item.image} />
-        <h2 className={styles.title}>{item.title}</h2>
+        <Link to={routes.newsDetails.to(item.id)} className={styles.title}>{item.title}</Link>
         <p className={styles.extra}>
           {formatTimeAgo(item.published)} by {item.author}
         </p>
