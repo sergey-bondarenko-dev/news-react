@@ -1,0 +1,32 @@
+.root {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .75rem;
+    font-size: 1.15rem;
+}
+
+.arrow,
+.pageNumber {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    font-size: inherit;
+    line-height: 1;
+    display: inline-flex;
+}
+
+[data-theme=dark] .arrow,
+[data-theme=dark] .pageNumber {
+    color: #f2f3f5;
+}
+
+.pageNumber {
+    border: none;
+    background-color: transparent;
+}
+
+.arrow:disabled,
+.pageNumber:disabled {
+    cursor: not-allowed;
+}
